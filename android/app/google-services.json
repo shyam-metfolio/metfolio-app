@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1081224747539",
+    "project_id": "metfolio-a4114",
+    "storage_bucket": "metfolio-a4114.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081224747539:android:6f9250cee3b33e5caf3de6",
+        "android_client_info": {
+          "package_name": "com.metfolio.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1081224747539-5npd4el3vfma1b32uaklmpc0nqqp0h8n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_mJcVOKIRhXB5lBBJqx2zFlAWOFh9hUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1081224747539-5npd4el3vfma1b32uaklmpc0nqqp0h8n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

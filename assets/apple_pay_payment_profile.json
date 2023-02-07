@@ -1,0 +1,20 @@
+{
+    "provider": "apple_pay",
+    "data": {
+        "merchantIdentifier": "merchant.com.metfolio",
+        "displayName": "Metfolio",
+        "merchantCapabilities": [
+            "3DS"
+        ],
+        "supportedNetworks": [
+            "amex",
+            "visa",
+            "discover",
+            "masterCard"
+        ],
+        "countryCode": "GB",
+        "currencyCode": "GBP",
+        "requiredBillingContactFields": null,
+        "requiredShippingContactFields": null
+    }
+}
