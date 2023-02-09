@@ -26,8 +26,9 @@ class MyOrderDetialsModel {
       MyOrderDetialsModel(
         status: json["status"],
         url: json["url"],
-        details:
-            List<Detail>.from(json["details"].map((x) => Detail.fromJson(x))),
+        details: List<Detail>.from(json["details"] == null
+            ? []
+            : json["details"]!.map((x) => Detail.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

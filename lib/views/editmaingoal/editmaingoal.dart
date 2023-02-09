@@ -955,6 +955,8 @@ class _EditMainGoalState extends State<EditMainGoal> {
                                                                                               amount = (_amountController.text);
                                                                                               date = monthsSelectedValue;
                                                                                             });
+                                                                                            print("this is new date" + date);
+                                                                                            print(date);
                                                                                             var res = await OrderAPI().editGoal(context, goalId, goalName, amount.replaceAll(RegExp(Secondarycurrency), ''), date, '1', currentStatus.toString());
                                                                                             print(res);
                                                                                             if (res != null && res['status'] == 'OK') {

@@ -104,34 +104,34 @@ class AccountvalueContainer extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  if (goal)
-                    // if (tittle['details']['subscription_status'] != '1' &&
-                    //     tittle['details']['subscription_status'] != 1)
-                    GestureDetector(
-                      onTap: () {
-                        Twl.navigateTo(
-                          context,
-                          PaymentMethodPage(
-                            type: GoldType().EditGoal,
-                            payment: "",
-                          ),
-                        );
-                      },
-                      child: Center(
-                        child: Text(
-                          'Edit Billing',
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              color: tBlue,
-                              // fontFamily: 'Barlow',
-                              fontSize: isTab(context) ? 13.sp : 10.sp,
-                              fontWeight: FontWeight.w100),
-                        ),
-                      ),
-                    ),
+                  // if (goal)
+                  //   // if (tittle['details']['subscription_status'] != '1' &&
+                  //   //     tittle['details']['subscription_status'] != 1)
+                  //   GestureDetector(
+                  //     onTap: () {
+                  //       Twl.navigateTo(
+                  //         context,
+                  //         PaymentMethodPage(
+                  //           type: GoldType().EditGoal,
+                  //           payment: "",
+                  //         ),
+                  //       );
+                  //     },
+                  //     child: Center(
+                  //       child: Text(
+                  //         'Edit Billing',
+                  //         textAlign: TextAlign.center,
+                  //         overflow: TextOverflow.ellipsis,
+                  //         maxLines: 1,
+                  //         style: TextStyle(
+                  //             decoration: TextDecoration.underline,
+                  //             color: tBlue,
+                  //             // fontFamily: 'Barlow',
+                  //             fontSize: isTab(context) ? 13.sp : 10.sp,
+                  //             fontWeight: FontWeight.w100),
+                  //       ),
+                  //     ),
+                  //   ),
                 ],
               ),
             ],

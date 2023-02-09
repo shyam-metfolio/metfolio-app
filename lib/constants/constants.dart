@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
 const tDefaultPadding = 20.0;
-
+const tredColor = Color(0xffFA0808);
 const tPrimaryColor = Color(0XFFE5B02C);
 const tPrimaryColor2 = Color(0XFFE5E5E5);
 const tPrimaryColor3 = Color(0xFfF9DDA5);
-
+const grayColor = Color(0xff57B0BA);
+const tgreenColor = Color(0xff44EF1C);
 const tSecondaryColor = Color(0XFF1E365B);
+const tlightBlue = Color(0xff2AB2BC);
+const tgrayColor2 = Color(0xff707070);
+const twhiteColor2 = Color(0xffE8ECF4);
 // const tSecondCardBackground = Color(0xFFF3F4F6);
 const tWhite = Color(0XFFffffff);
 const tGray = Color(0XFF757575);
@@ -51,6 +55,13 @@ class GoldType {
   int Deliver = 5;
   int EditGoal = 6;
   int EndGoal = 7;
+}
+
+int daysInMonth(DateTime date) {
+  var firstDayThisMonth = new DateTime(date.year, date.month, date.day);
+  var firstDayNextMonth = new DateTime(firstDayThisMonth.year,
+      firstDayThisMonth.month + 1, firstDayThisMonth.day);
+  return firstDayNextMonth.difference(firstDayThisMonth).inDays;
 }
 
 var addressKey = '5VvhGDeezkCpMvD7QKbdMg36096';

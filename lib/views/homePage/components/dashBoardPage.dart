@@ -58,11 +58,13 @@ class _DashBoardPageState extends State<DashBoardPage> {
   getMyGoal() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var res = await UserAPI().getMyGoals(context);
-    setState(() {
-      myGoalDetails = res;
-      // print("name_of_goal");
-      // print(myGoalDetails['details']['name_of_goal']);
-    });
+    if (mounted) {
+      setState(() {
+        myGoalDetails = res;
+        // print("name_of_goal");
+        // print(myGoalDetails['details']['name_of_goal']);
+      });
+    }
     if (res != null && res['status'] == 'OK') {
       setState(() {
         sharedPreferences.setString("goalName", res['details']['name_of_goal']);
@@ -97,14 +99,16 @@ class _DashBoardPageState extends State<DashBoardPage> {
     res = await UserAPI().getGoldPrice(context);
     print('getGoldPrice>>>>>>>>>>>>>');
     print(res);
-    setState(() {
-      priceDetails = res['details'];
-      if (avalibleGoalGold != null) {
-        goalTotalValue = avalibleGoalGold * (priceDetails['price_gram_24k']);
-        print('goalTotalValue');
-        print(goalTotalValue);
-      }
-    });
+    if (mounted) {
+      setState(() {
+        priceDetails = res['details'];
+        if (avalibleGoalGold != null) {
+          goalTotalValue = avalibleGoalGold * (priceDetails['price_gram_24k']);
+          print('goalTotalValue');
+          print(goalTotalValue);
+        }
+      });
+    }
     checkGold();
     // }
 
@@ -116,13 +120,15 @@ class _DashBoardPageState extends State<DashBoardPage> {
     var res =
         await UserAPI().checkAvaliableGold(context, physicalGold.toString());
     if (res != null && res['status'] == "OK") {
-      setState(() {
-        totalGold = res['details']['availableGold'].toStringAsFixed(3);
-        if (totalGold != null) {
-          phyGoldValue = double.parse(totalGold.toString()) *
-              (priceDetails['price_gram_24k']);
-        }
-      });
+      if (mounted) {
+        setState(() {
+          totalGold = res['details']['availableGold'].toStringAsFixed(3);
+          if (totalGold != null) {
+            phyGoldValue = double.parse(totalGold.toString()) *
+                (priceDetails['price_gram_24k']);
+          }
+        });
+      }
     } else {}
     print('totalGold>>>>>>>>>>>>>');
     // print(totalGold);
@@ -151,289 +157,51 @@ class _DashBoardPageState extends State<DashBoardPage> {
           )
         : SingleChildScrollView(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+              // padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      ArgonButton(
-                        highlightElevation: 0,
-                        elevation: 0,
-                        width: 40.w,
-                        height: isTab(context) ? 200 : 145,
-                        borderRadius: 15,
-                        color: tContainerColor,
-                        child: Goldcontainer(
-                          // selectedvalue == 1 ? btnColor : tContainerColor,
-                          goldGrams: _data.phyGoldDispalyType == 1
-                              ? '${totalGold}g'
-                              : (Secondarycurrency +
-                                  phyGoldValue.toStringAsFixed(2)),
-                          // goldGrams: '£5,300.72',
-                          imagess: Images.GOLD,
-                          title: "Physical Gold",
-                          ontap: () async {
-                            goldDisplaySheet(context, _data, phyGoldValue,
-                                totalGold, Images.GOLD, 1);
-
-                            Segment.track(
-                              eventName: 'physical_gold_button',
-                              properties: {"tapped": true},
-                            );
-
-                            mixpanel.track(
-                              'physical_gold_button',
-                              properties: {"tapped": true},
-                            );
-
-                            await FirebaseAnalytics.instance.logEvent(
-                              name: "physical_gold_button",
-                              parameters: {"tapped": true},
-                            );
-                          },
-                        ),
-                        loader: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            child: Lottie.asset(
-                              Loading.LOADING,
-                              // width: 50.w,
-                            )
-                            // SpinKitRotatingCircle(
-                            //   color: Colors.white,
-                            //   // size: loaderWidth ,
-                            // ),
-                            ),
-                        onTap: (tartLoading, stopLoading, btnState) {
-                          Twl.navigateTo(
-                            context,
-                            BottomNavigation(
-                              tabIndexId: 0,
-                              actionIndex: 0,
-                              homeindex: 1,
-                            ),
-                          );
-                        },
-                      ),
-                      SizedBox(
-                        width: 2.w,
-                      ),
-                      // if (myGoalDetails != null)
-                      if (myGoalDetails['status'] == 'NOK')
-                        ArgonButton(
-                          elevation: 0,
-                          highlightElevation: 0,
-                          height: isTab(context) ? 200 : 145,
-                          width: 40.w,
-                          borderRadius: 10,
-                          color: tContainerColor,
-                          child: Container(
-                            width: 40.w,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10)),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 13),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  // height: 5.h,
-                                  // height: 38,
-                                  child: Image.asset(
-                                    Images.MUGOALGOLD,
-                                    height: 35,
-                                    // scale: 3,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 28,
-                                ),
-                                Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                      // color: tContainerColor,
-                                      borderRadius: BorderRadius.circular(15)),
-                                  // padding: EdgeInsets.fromLTRB(30, 15, 15, 15),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Start a Goal!",
-                                          style: TextStyle(
-                                              color: tBlue,
-                                              fontFamily: 'Barlow',
-                                              fontSize:
-                                                  isTab(context) ? 11.sp : 19,
-                                              fontWeight: FontWeight.w700)
-                                          // style: TextStyle(
-                                          //     fontSize:
-                                          //         isTab(context) ? 13.sp : 19,
-                                          //     fontWeight: FontWeight.w500,
-                                          //     fontFamily: 'Barlow',
-                                          //     color: tBlue),
-                                          ),
-                                      SizedBox(
-                                        height: 3,
-                                      ),
-                                      GestureDetector(
-                                        onTap: () async {
-                                          // if (verifStatus) {
-                                          Twl.navigateTo(context, GoalAmount());
-                                          // } else {
-                                          //   Twl.navigateTo(
-                                          //       context, VeriffiPage());
-                                          // }
-                                          // Twl.navigateTo(context, NameYourGoal());
-
-                                          Segment.track(
-                                            eventName: 'start_a_goal_button',
-                                            properties: {"tapped": true},
-                                          );
-
-                                          mixpanel.track(
-                                            'start_a_goal_button',
-                                            properties: {"tapped": true},
-                                          );
-
-                                          await FirebaseAnalytics.instance
-                                              .logEvent(
-                                            name: "start_a_goal_button",
-                                            parameters: {"tapped": true},
-                                          );
-                                        },
-                                        child: Container(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 12, vertical: 8),
-                                            // width: 26.w,
-                                            // height: 22,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                                color: tTextformfieldColor),
-                                            child: Image.asset(
-                                              Images.RIGHTARROW,
-                                              scale: 7,
-                                            )
-                                            // Center(
-                                            //   child: Text(
-                                            //     'Start Now!',
-                                            //     textAlign: TextAlign.center,
-                                            //     style: TextStyle(
-                                            //       color: tSecondaryColor,
-                                            //       // fontFamily: 'Signika',
-                                            //       fontSize: 10.sp,
-                                            //     ),
-                                            //   ),
-                                            // ),
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          loader: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              child: Lottie.asset(
-                                Loading.LOADING,
-                                // width: 50.w,
-                              )
-                              // SpinKitRotatingCircle(
-                              //   color: Colors.white,
-                              //   // size: loaderWidth ,
-                              // ),
-                              ),
-                          onTap: (tartLoading, stopLoading, btnState) {
-                            Twl.navigateTo(context, GoalAmount());
-                          },
-                        ),
-                      // if (myGoalDetails != null)
-                      if (myGoalDetails['status'] == 'OK')
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 3.w, vertical: 4.h),
+                    color: tPrimaryColor,
+                    child: Row(
+                      children: [
                         ArgonButton(
                           highlightElevation: 0,
                           elevation: 0,
-                          height: isTab(context) ? 200 : 145,
-                          width: 40.w,
-                          borderRadius: 10,
+                          width: 30.w,
+                          height: isTab(context) ? 200 : 140,
+                          borderRadius: 15,
                           color: tContainerColor,
-                          child: Container(
-                            width: 40.w,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10)),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 13),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  height: 35,
-                                  child: Image.asset(Images.MUGOALGOLD),
-                                ),
-                                SizedBox(
-                                  height: 28,
-                                ),
-                                Text(
-                                  myGoalDetails['name_of_goal'] == ''
-                                      ? "My Goal"
-                                      : myGoalDetails['details']
-                                          ['name_of_goal'],
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      color: tBlue,
-                                      fontFamily: 'Barlow',
-                                      fontSize: isTab(context) ? 11.sp : 19,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                                Spacer(),
-                                Row(
-                                  children: [
-                                    Text(
-                                      _data.goalDispalyType == 1
-                                          ? avalibleGoalGold
-                                                  .toStringAsFixed(3) +
-                                              'g'
-                                          : '£${(goalTotalValue ?? 0).toStringAsFixed(2)}',
-                                      style: TextStyle(
-                                          color: tBlue,
-                                          fontFamily: 'Barlow',
-                                          fontSize: isTab(context) ? 13.sp : 21,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                    SizedBox(
-                                      width: 6.w,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        goldDisplaySheet(
-                                          context,
-                                          _data,
-                                          goalTotalValue,
-                                          avalibleGoalGold ?? 0,
-                                          Images.GOLD,
-                                          2,
-                                        );
-                                      },
-                                      child: Padding(
-                                        padding: EdgeInsets.only(top: 6),
-                                        child: Image.asset(
-                                          Images.EXPANDMORE,
-                                          scale: 3.8,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                Spacer(),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                              ],
-                            ),
+                          child: Goldcontainer(
+                            // selectedvalue == 1 ? btnColor : tContainerColor,
+                            goldGrams: _data.phyGoldDispalyType == 1
+                                ? '${totalGold}g'
+                                : (Secondarycurrency +
+                                    phyGoldValue.toStringAsFixed(2)),
+                            // goldGrams: '£5,300.72',
+                            imagess: Images.GOLD,
+                            title: "Physical Gold",
+                            ontap: () async {
+                              goldDisplaySheet(context, _data, phyGoldValue,
+                                  totalGold, Images.GOLD, 1);
+
+                              Segment.track(
+                                eventName: 'physical_gold_button',
+                                properties: {"tapped": true},
+                              );
+
+                              mixpanel.track(
+                                'physical_gold_button',
+                                properties: {"tapped": true},
+                              );
+
+                              await FirebaseAnalytics.instance.logEvent(
+                                name: "physical_gold_button",
+                                parameters: {"tapped": true},
+                              );
+                            },
                           ),
                           loader: Container(
                               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -452,23 +220,286 @@ class _DashBoardPageState extends State<DashBoardPage> {
                               BottomNavigation(
                                 tabIndexId: 0,
                                 actionIndex: 0,
-                                homeindex: 2,
+                                homeindex: 1,
                               ),
                             );
                           },
                         ),
-                    ],
+                        SizedBox(
+                          width: 2.w,
+                        ),
+                        // if (myGoalDetails != null)
+                        if (myGoalDetails['status'] == 'NOK')
+                          ArgonButton(
+                            elevation: 0,
+                            highlightElevation: 0,
+                            height: isTab(context) ? 200 : 140,
+                            width: 30.w,
+                            borderRadius: 10,
+                            color: tContainerColor,
+                            child: Container(
+                              width: 40.w,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 13),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    // height: 5.h,
+                                    // height: 38,
+                                    child: Image.asset(
+                                      Images.MUGOALGOLD,
+                                      height: 35,
+                                      // scale: 3,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 28,
+                                  ),
+                                  Container(
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                        // color: tContainerColor,
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
+                                    // padding: EdgeInsets.fromLTRB(30, 15, 15, 15),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Start a Goal!",
+                                            style: TextStyle(
+                                                color: tBlue,
+                                                fontFamily: 'Barlow',
+                                                fontSize:
+                                                    isTab(context) ? 11.sp : 19,
+                                                fontWeight: FontWeight.w700)
+                                            // style: TextStyle(
+                                            //     fontSize:
+                                            //         isTab(context) ? 13.sp : 19,
+                                            //     fontWeight: FontWeight.w500,
+                                            //     fontFamily: 'Barlow',
+                                            //     color: tBlue),
+                                            ),
+                                        SizedBox(
+                                          height: 3,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () async {
+                                            // if (verifStatus) {
+                                            Twl.navigateTo(
+                                                context, GoalAmount());
+                                            // } else {
+                                            //   Twl.navigateTo(
+                                            //       context, VeriffiPage());
+                                            // }
+                                            // Twl.navigateTo(context, NameYourGoal());
+
+                                            Segment.track(
+                                              eventName: 'start_a_goal_button',
+                                              properties: {"tapped": true},
+                                            );
+
+                                            mixpanel.track(
+                                              'start_a_goal_button',
+                                              properties: {"tapped": true},
+                                            );
+
+                                            await FirebaseAnalytics.instance
+                                                .logEvent(
+                                              name: "start_a_goal_button",
+                                              parameters: {"tapped": true},
+                                            );
+                                          },
+                                          child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 12, vertical: 8),
+                                              // width: 26.w,
+                                              // height: 22,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                  color: tTextformfieldColor),
+                                              child: Image.asset(
+                                                Images.RIGHTARROW,
+                                                scale: 7,
+                                              )
+                                              // Center(
+                                              //   child: Text(
+                                              //     'Start Now!',
+                                              //     textAlign: TextAlign.center,
+                                              //     style: TextStyle(
+                                              //       color: tSecondaryColor,
+                                              //       // fontFamily: 'Signika',
+                                              //       fontSize: 10.sp,
+                                              //     ),
+                                              //   ),
+                                              // ),
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            loader: Container(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: Lottie.asset(
+                                  Loading.LOADING,
+                                  // width: 50.w,
+                                )
+                                // SpinKitRotatingCircle(
+                                //   color: Colors.white,
+                                //   // size: loaderWidth ,
+                                // ),
+                                ),
+                            onTap: (tartLoading, stopLoading, btnState) {
+                              Twl.navigateTo(context, GoalAmount());
+                            },
+                          ),
+                        // if (myGoalDetails != null)
+                        if (myGoalDetails['status'] == 'OK')
+                          ArgonButton(
+                            highlightElevation: 0,
+                            elevation: 0,
+                            height: isTab(context) ? 200 : 140,
+                            width: 30.w,
+                            borderRadius: 10,
+                            color: tContainerColor,
+                            child: Container(
+                              width: 30.w,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 13),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    child: Image.asset(
+                                      'images/arc.png',
+                                      width: 40,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 28,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        _data.goalDispalyType == 1
+                                            ? avalibleGoalGold
+                                                    .toStringAsFixed(3) +
+                                                'g'
+                                            : '£${(goalTotalValue ?? 0).toStringAsFixed(2)}',
+                                        style: TextStyle(
+                                            color: tBlue,
+                                            fontFamily: 'Barlow',
+                                            fontSize:
+                                                isTab(context) ? 13.sp : 24,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                      SizedBox(
+                                        width: 4,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          goldDisplaySheet(
+                                            context,
+                                            _data,
+                                            goalTotalValue,
+                                            avalibleGoalGold ?? 0,
+                                            Images.GOLD,
+                                            2,
+                                          );
+                                        },
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          padding: EdgeInsets.all(4),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: tSecondaryColor)),
+                                          child: Image.asset(
+                                            'images/down.png',
+                                            height: 8,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Text(
+                                    myGoalDetails['name_of_goal'] == ''
+                                        ? "My Goal"
+                                        : myGoalDetails['details']
+                                            ['name_of_goal'],
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        color: tBlue,
+                                        fontFamily: 'Barlow',
+                                        fontSize: isTab(context) ? 11.sp : 15,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            loader: Container(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: Lottie.asset(
+                                  Loading.LOADING,
+                                  // width: 50.w,
+                                )
+                                // SpinKitRotatingCircle(
+                                //   color: Colors.white,
+                                //   // size: loaderWidth ,
+                                // ),
+                                ),
+                            onTap: (tartLoading, stopLoading, btnState) {
+                              Twl.navigateTo(
+                                context,
+                                BottomNavigation(
+                                  tabIndexId: 0,
+                                  actionIndex: 0,
+                                  homeindex: 2,
+                                ),
+                              );
+                            },
+                          ),
+                      ],
+                    ),
                   ),
-                  SizedBox(
-                    height: 6.h,
+                  Container(
+                    height: 3.h,
+                    margin: EdgeInsets.all(0),
+                    color: tPrimaryColor,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30),
+                          )),
+                    ),
                   ),
-                  Text(
-                    "Quick access",
-                    style: TextStyle(
-                        fontSize: isTab(context) ? 18.sp : 21.sp,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Signika',
-                        color: tSecondaryColor),
+                  Container(
+                    color: Colors.white,
+                    child: Text(
+                      "Quick access",
+                      style: TextStyle(
+                          fontSize: isTab(context) ? 18.sp : 21.sp,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Signika',
+                          color: tSecondaryColor),
+                    ),
                   ),
                   SizedBox(
                     height: 4.h,

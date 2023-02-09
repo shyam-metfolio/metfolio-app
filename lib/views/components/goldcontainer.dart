@@ -24,8 +24,10 @@ class Goldcontainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 40.w,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+      ),
       padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,16 +43,6 @@ class Goldcontainer extends StatelessWidget {
           SizedBox(
             height: 28,
           ),
-          Text(
-            title ?? "",
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-                color: tBlue,
-                fontFamily: 'Barlow',
-                fontSize: isTab(context) ? 11.sp : 19,
-                fontWeight: FontWeight.w700),
-          ),
           Expanded(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -60,38 +52,40 @@ class Goldcontainer extends StatelessWidget {
                   style: TextStyle(
                     color: tBlue,
                     fontFamily: 'Barlow',
-                    fontSize: isTab(context) ? 13.sp : 21,
+                    fontSize: isTab(context) ? 13.sp : 24,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
                 SizedBox(
-                  width: 2.w,
+                  width: 4,
                 ),
-                // IconButton(
-                //   iconSize: ,
-                //   onPressed: ontap,
-                //   icon: Icon(
-                //     Icons.keyboard_arrow_down,
-                //     color: tPrimaryColor,
-                //   ),
-                // ),
                 InkWell(
                   onTap: ontap,
                   child: Container(
-                    padding: EdgeInsets.only(top: 6, left: 10
-                        //, right: 10, bottom: 6,
-                        // bottom: 8,
-                        ),
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: tSecondaryColor)),
                     child: Image.asset(
-                      Images.EXPANDMORE,
-                      // height: 20,
-                      scale: 3.8,
+                      'images/down.png',
+                      height: 8,
                     ),
                   ),
                 )
               ],
             ),
-          )
+          ),
+          Text(
+            title ?? "",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+                color: tBlue,
+                fontFamily: 'Barlow',
+                fontSize: isTab(context) ? 11.sp : 15,
+                fontWeight: FontWeight.w700),
+          ),
         ],
       ),
     );
