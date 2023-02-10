@@ -114,6 +114,7 @@ flutter:
     - images/no.png
     - images/30m1.png
     - images/30m2.png
+    - images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -145,6 +146,18 @@ flutter:
     - family: SignikaR
       fonts:
         - asset: fonts/Signika-Regular.ttf
+    - family: SignikaR
+      fonts:
+        - asset: fonts/Barlow-Regular.ttf
+    - family: SignikaR
+      fonts:
+        - asset: fonts/Barlow-Medium.ttf
+    - family: SignikaR
+      fonts:
+        - asset: fonts/Barlow-Bold.ttf
+    - family: SignikaR
+      fonts:
+        - asset: fonts/Barlow-SemiBold.ttf
 
     # - family: Barlow-Bold
     #   fonts:

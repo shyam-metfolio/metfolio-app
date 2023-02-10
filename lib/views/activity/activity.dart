@@ -57,12 +57,16 @@ class _ActivityState extends State<Activity> {
   var priceDetails;
   var totalGoldPrice;
   getGoldPrice() async {
-    res = await UserAPI().getGoldPrice(context);
-    if (totalGold != 0) {
-      setState(() {
-        priceDetails = res['details'];
-        totalGoldPrice = totalGold * (priceDetails['price_gram_24k']);
-      });
+    if (mounted) {
+      res = await UserAPI().getGoldPrice(context);
+      if (totalGold != 0) {
+        if (mounted) {
+          setState(() {
+            priceDetails = res['details'];
+            totalGoldPrice = totalGold * (priceDetails['price_gram_24k']);
+          });
+        }
+      }
     }
 
     print('getGoldPrice');
@@ -122,9 +126,11 @@ class _ActivityState extends State<Activity> {
     var res =
         await UserAPI().checkAvaliableGold(context, physicalGold.toString());
     if (res != null && res['status'] == "OK") {
-      setState(() {
-        totalGold = double.parse(res['details']['availableGold'].toString());
-      });
+      if (mounted) {
+        setState(() {
+          totalGold = double.parse(res['details']['availableGold'].toString());
+        });
+      }
     } else {}
     getGoldPrice();
   }

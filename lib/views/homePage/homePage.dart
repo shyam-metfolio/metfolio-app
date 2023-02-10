@@ -45,62 +45,64 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-    // checkLoginStatus();
+    checkLoginStatus();
     controller =
         TabController(length: 3, vsync: this, initialIndex: widget.homeindex);
   }
 
-// late SharedPreferences sharedPreferences;
-//   var mobileNo;
-//   var email;
-//   var firstname;
-//   var check;
-//   var profileImage;
-//   var authCode;
-//   var details;
-//   var lastName;
+  late SharedPreferences sharedPreferences;
+  var mobileNo;
+  var email;
+  var firstname;
+  var check;
+  var profileImage;
+  var authCode;
+  var details;
+  var lastName;
 
-//   checkLoginStatus() async {
-//     sharedPreferences = await SharedPreferences.getInstance();
-//     authCode = sharedPreferences.getString('authCode');
-//     check = await UserAPI().checkApi(sharedPreferences.getString('authCode')!);
-//     print(check);
-//     if (check != null && check['status'] == 'OK') {
-//       setState(() {
-//         details = check['detail'];
-//       });
-//       sharedPreferences.setString(
-//           'contactnumber', check['detail']['contact_no'].toString());
-//       sharedPreferences.setString('email', check['detail']['email'].toString());
+  checkLoginStatus() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    authCode = sharedPreferences.getString('authCode');
+    check = await UserAPI().checkApi(sharedPreferences.getString('authCode')!);
+    print(check);
+    if (check != null && check['status'] == 'OK') {
+      setState(() {
+        details = check['detail'];
+      });
+      sharedPreferences.setString(
+          'contactnumber', check['detail']['contact_no'].toString());
+      sharedPreferences.setString('email', check['detail']['email'].toString());
 
-//       sharedPreferences.setString(
-//           'username', check['detail']['first_name'].toString());
-//       sharedPreferences.setString('lastName', check['detail']['last_name']);
-//       if (check['detail']['profile_image'] != null) {
-//         sharedPreferences.setString(
-//             "profile_image", check['detail']['profile_image']);
-//       }
-//     }
+      sharedPreferences.setString(
+          'username', check['detail']['username'].toString());
+      sharedPreferences.setString(
+          'firstName', check['detail']['first_name'].toString());
+      sharedPreferences.setString('lastName', check['detail']['last_name']);
+      if (check['detail']['profile_image'] != null) {
+        sharedPreferences.setString(
+            "profile_image", check['detail']['profile_image']);
+      }
+    }
 
-//     setState(() {
-//       mobileNo = sharedPreferences.getString("contactnumber") != null
-//           ? sharedPreferences.getString("contactnumber")
-//           : ' ';
-//       print(mobileNo);
-//       email = sharedPreferences.getString('email') != null
-//           ? sharedPreferences.getString('email')
-//           : ' ';
-//       firstname = sharedPreferences.getString('username') != null
-//           ? sharedPreferences.getString('username')
-//           : ' ';
-//       lastName = sharedPreferences.getString('lastName') != null
-//           ? sharedPreferences.getString('lastName')
-//           : '';
-//       profileImage = sharedPreferences.getString('profile_image') != null
-//           ? sharedPreferences.getString('profile_image')
-//           : 'https://img.icons8.com/bubbles/50/000000/user.png';
-//     });
-//   }
+    setState(() {
+      mobileNo = sharedPreferences.getString("contactnumber") != null
+          ? sharedPreferences.getString("contactnumber")
+          : ' ';
+      print(mobileNo);
+      email = sharedPreferences.getString('email') != null
+          ? sharedPreferences.getString('email')
+          : ' ';
+      firstname = sharedPreferences.getString('firstName') != null
+          ? sharedPreferences.getString('firstName')
+          : ' ';
+      lastName = sharedPreferences.getString('lastName') != null
+          ? sharedPreferences.getString('lastName')
+          : '';
+      profileImage = sharedPreferences.getString('profile_image') != null
+          ? sharedPreferences.getString('profile_image')
+          : 'https://img.icons8.com/bubbles/50/000000/user.png';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +112,7 @@ class _HomePageState extends State<HomePage>
         initialIndex: tabIndex,
         length: 3,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          padding: EdgeInsets.symmetric(horizontal: 0, vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -118,14 +120,46 @@ class _HomePageState extends State<HomePage>
               SizedBox(
                 height: 3.h,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  if (testEnvironment) Spacer(),
-                  if (testEnvironment) Text("Test environment"),
-                  if (testEnvironment) Spacer(),
-                  NameClip(),
-                ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Hi ${firstname?[0].toUpperCase() ?? ''}${firstname?.substring(1) ?? ''}👋",
+                          style: TextStyle(
+                              fontFamily: 'Barlow',
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Twl.navigateTo(context, ProfilePage());
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: tPrimaryColor),
+                            shape: BoxShape.circle),
+                        child: Text(
+                            (firstname != null && lastName != null)
+                                ? (firstname[0].toUpperCase() ?? '') +
+                                    (lastName[0].toUpperCase() ?? '')
+                                : '',
+                            style: TextStyle(
+                                color: tSecondaryColor,
+                                fontFamily: 'Barlow',
+                                fontSize: 9.sp,
+                                fontWeight: FontWeight.bold)),
+                      ),
+                    )
+                  ],
+                ),
               ),
               SizedBox(
                 height: 2.h,
@@ -199,100 +233,6 @@ class _HomePageState extends State<HomePage>
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class NameClip extends StatefulWidget {
-  const NameClip({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<NameClip> createState() => _NameClipState();
-}
-
-class _NameClipState extends State<NameClip> {
-  @override
-  void initState() {
-    checkLoginStatus();
-    // TODO: implement initState
-    super.initState();
-  }
-
-  late SharedPreferences sharedPreferences;
-  var mobileNo;
-  var email;
-  var firstname;
-  var check;
-  var profileImage;
-  var authCode;
-  var details;
-  var lastName;
-
-  checkLoginStatus() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-    authCode = sharedPreferences.getString('authCode');
-    check = await UserAPI().checkApi(sharedPreferences.getString('authCode')!);
-    print(check);
-    if (check != null && check['status'] == 'OK') {
-      setState(() {
-        details = check['detail'];
-      });
-      sharedPreferences.setString(
-          'contactnumber', check['detail']['contact_no'].toString());
-      sharedPreferences.setString('email', check['detail']['email'].toString());
-
-      sharedPreferences.setString(
-          'username', check['detail']['username'].toString());
-      sharedPreferences.setString(
-          'firstName', check['detail']['first_name'].toString());
-      sharedPreferences.setString('lastName', check['detail']['last_name']);
-      if (check['detail']['profile_image'] != null) {
-        sharedPreferences.setString(
-            "profile_image", check['detail']['profile_image']);
-      }
-    }
-
-    setState(() {
-      mobileNo = sharedPreferences.getString("contactnumber") != null
-          ? sharedPreferences.getString("contactnumber")
-          : ' ';
-      print(mobileNo);
-      email = sharedPreferences.getString('email') != null
-          ? sharedPreferences.getString('email')
-          : ' ';
-      firstname = sharedPreferences.getString('firstName') != null
-          ? sharedPreferences.getString('firstName')
-          : ' ';
-      lastName = sharedPreferences.getString('lastName') != null
-          ? sharedPreferences.getString('lastName')
-          : '';
-      profileImage = sharedPreferences.getString('profile_image') != null
-          ? sharedPreferences.getString('profile_image')
-          : 'https://img.icons8.com/bubbles/50/000000/user.png';
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Twl.navigateTo(context, ProfilePage());
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-        decoration: BoxDecoration(color: tPrimaryColor, shape: BoxShape.circle),
-        child: Text(
-            (firstname != null && lastName != null)
-                ? (firstname[0].toUpperCase() ?? '') +
-                    (lastName[0].toUpperCase() ?? '')
-                : '',
-            style: TextStyle(
-                color: tSecondaryColor,
-                fontSize: isTab(context) ? 10.sp : 13.sp,
-                fontWeight: FontWeight.w400)),
       ),
     );
   }

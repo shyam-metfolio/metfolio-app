@@ -108,6 +108,7 @@ class _TwlNormalTextFieldState extends State<TwlNormalTextField> {
             color: Colors.red,
           ),
         ),
+
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(
