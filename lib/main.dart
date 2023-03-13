@@ -314,7 +314,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initMixpanel() async {
-    mixpanel = await Mixpanel.init("709e6e13dfe0b1c5d22fc51032bbf937",
+    mixpanel = await Mixpanel.init("ed69997e082c0c0b5d2ddcdb2ee6429a",
         trackAutomaticEvents: true);
 
     // Track with event-name

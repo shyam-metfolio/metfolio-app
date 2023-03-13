@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "1081224747539",
-    "project_id": "metfolio-a4114",
-    "storage_bucket": "metfolio-a4114.appspot.com"
+    "project_number": "855670552236",
+    "project_id": "metfolio-e73cc",
+    "storage_bucket": "metfolio-e73cc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1081224747539:android:6f9250cee3b33e5caf3de6",
+        "mobilesdk_app_id": "1:855670552236:android:1023c8c1857164b1ba1109",
         "android_client_info": {
           "package_name": "com.metfolio.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1081224747539-5npd4el3vfma1b32uaklmpc0nqqp0h8n.apps.googleusercontent.com",
+          "client_id": "855670552236-765nnqnaierqnipb62f4l7s40k8ghgqt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.metfolio.app",
+            "certificate_hash": "ac1a3ba3091682dee3ade3be0e5faf5ce830203e"
+          }
+        },
+        {
+          "client_id": "855670552236-s1trh6cc99pv1ali34i1s6pt3haep7qt.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC_mJcVOKIRhXB5lBBJqx2zFlAWOFh9hUg"
+          "current_key": "AIzaSyDCrFdc3n6xDtmXdIdRtDF1epHTHRZRhng"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1081224747539-5npd4el3vfma1b32uaklmpc0nqqp0h8n.apps.googleusercontent.com",
+              "client_id": "855670552236-s1trh6cc99pv1ali34i1s6pt3haep7qt.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

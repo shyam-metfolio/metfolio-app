@@ -3,10 +3,13 @@ import 'package:base_project_flutter/responsive.dart';
 import 'package:base_project_flutter/views/logiPage/loginPage.dart';
 import '../../constants/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 class OnboardingPage extends StatefulWidget {
-  OnboardingPage({Key? key}) : super(key: key);
+  final Mixpanel mixpanel;
+
+  OnboardingPage({Key? key, required this.mixpanel}) : super(key: key);
 
   @override
   _OnboardingPageState createState() => _OnboardingPageState();
@@ -23,23 +26,40 @@ class _OnboardingPageState extends State<OnboardingPage> {
     {
       'title': 'Store or Individual',
       'suntitle':
-          'Register yourself if you own a store or provide professional services as an individual',
+      'Register yourself if you own a store or provide professional services as an individual',
       // 'image':Images.OnBoardScreen1,
     },
     {
       'title': 'Offers',
       'suntitle':
-          'Let the world know the offers you provide for the products or services you sell.',
+      'Let the world know the offers you provide for the products or services you sell.',
       // 'image':Images.OnBoardScreen2
     },
     {
       'title': 'Connect',
       'suntitle':
-          'Connect with your customers like never before and gain the returns you deserve.',
+      'Connect with your customers like never before and gain the returns you deserve.',
       // 'image':
     }
   ];
 
+  Mixpanel mixpanel = Mixpanel.init('ed69997e082c0c0b5d2ddcdb2ee6429a', trackAutomaticEvents: true) as Mixpanel;
+
+  @override
+  void initState() {
+    super.initState();
+    mixpanel.track('OnboardingPage Loaded'); // track page view
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    mixpanel.flush(); // flush events when page is disposed
+  }
+
+  void trackOnboardingEvent(int page) {
+    mixpanel.track('OnboardingPage Event', properties: {'Page Number': page});
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

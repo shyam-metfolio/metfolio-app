@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>855670552236-579713ke3es8uej6d3t714enkpco4nlt.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.855670552236-579713ke3es8uej6d3t714enkpco4nlt</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>855670552236-765nnqnaierqnipb62f4l7s40k8ghgqt.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCgO2TCZXEVN-uAEPVB3CZd6U5gsO2tJ80</string>
+	<key>GCM_SENDER_ID</key>
+	<string>855670552236</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.metfolio.app</string>
+	<key>PROJECT_ID</key>
+	<string>metfolio-e73cc</string>
+	<key>STORAGE_BUCKET</key>
+	<string>metfolio-e73cc.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:855670552236:ios:b263ab6dbb89b581ba1109</string>
+</dict>
+</plist>
